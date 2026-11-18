@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iman Ranjbar — AI Engineer & Technical Leader</title>
+  <meta name="description" content="Iman Ranjbar — AI Engineer building production LLM, RAG, multi-agent, voice AI and computer vision systems. Open to remote / global AI roles.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Iman Ranjbar — AI Engineer & Technical Leader">
+  <meta property="og:description" content="Production AI systems across LLMs, RAG, multi-agent workflows, voice AI, computer vision and MLOps.">
+  <meta property="og:image" content="https://imanrnj.github.io/bg.jpg">
+  <meta property="og:image:alt" content="Iman Ranjbar — AI Engineer portfolio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Iman Ranjbar — AI Engineer & Technical Leader">
+  <meta name="twitter:description" content="Production AI systems across LLMs, RAG, multi-agent workflows, voice AI, computer vision and MLOps.">
+  <meta name="twitter:image" content="https://imanrnj.github.io/bg.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #0b0e0d;
+      --glass-bg: rgba(13, 17, 16, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --text-main: #f4f6f5;
+      --text-muted: #9ea8a3;
+      --accent-amber: #f5b971;
+      --accent-jade: #6ee7b7;
+      --accent-blossom: #f9d5e5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* Fixed Cinematic Backdrop Stage */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      background: #0b0e0d;
+      perspective: 1200px;
+    }
+
+    .bg-wrapper {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-origin: center center;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      inset: -24px;
+      width: calc(100% + 48px);
+      height: calc(100% + 48px);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+      filter: contrast(1.03) brightness(0.96);
+    }
+
+    /* Soft Gradient Vignette for Crisp Readability on Right Side */
+    .stage-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to top, #0b0e0d 0%, rgba(11, 14, 13, 0.75) 8%, transparent 24%),
+        linear-gradient(90deg, rgba(11, 14, 13, 0.08) 0%, rgba(11, 14, 13, 0.35) 45%, rgba(11, 14, 13, 0.88) 70%, rgba(11, 14, 13, 0.97) 100%),
+        linear-gradient(180deg, rgba(11, 14, 13, 0.65) 0%, transparent 18%, transparent 85%, rgba(11, 14, 13, 0.85) 100%);
+    }
+
+    /* Floating Petals Overlay */
+    #petalsCanvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      will-change: transform;
+    }
+
+    /* Interactive Tree Node Beacon */
+    .tree-beacon {
+      position: absolute;
+      z-index: 4;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 0 6px rgba(245, 185, 113, 0.2), 0 0 24px var(--accent-amber);
+      transform: translate(-50%, -50%);
+      transition: top 0.9s cubic-bezier(0.22, 1, 0.36, 1), left 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .tree-beacon::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 185, 113, 0.6);
+      animation: pulseRing 2.4s infinite ease-out;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.7); opacity: 0.9; }
+      100% { transform: scale(2.1); opacity: 0; }
+    }
+
+    /* Dynamic SVG Connector Layer */
+    .connector-layer {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .connector-path {
+      fill: none;
+      stroke: url(#connectorGrad);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 6px rgba(245, 185, 113, 0.45));
+      transition: opacity 0.35s ease;
+    }
+
+    .connector-joint {
+      fill: var(--bg-base);
+      stroke: var(--accent-amber);
+      stroke-width: 1.75;
+    }
+
+    .connector-terminal {
+      fill: var(--accent-amber);
+      filter: drop-shadow(0 0 8px var(--accent-amber));
+    }
+
+    /* Top Minimal Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 44px;
+      pointer-events: none;
+    }
+
+    .brand {
+      pointer-events: auto;
+    }
+
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      pointer-events: auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-editorial {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-editorial:hover {
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+      background: rgba(245, 185, 113, 0.1);
+    }
+
+    .btn-accent {
+      background: var(--accent-amber);
+      color: #14100c;
+      border-color: var(--accent-amber);
+      font-weight: 600;
+    }
+
+    .btn-accent:hover {
+      background: #fbd09b;
+      color: #14100c;
+    }
+
+    /* Left Vertical Progress Indicator */
+    .rail {
+      position: fixed;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 35;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .rail-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      opacity: 0.45;
+      transition: opacity 0.3s ease;
+    }
+
+    .rail-item:hover,
+    .rail-item.active {
+      opacity: 1;
+    }
+
+    .rail-pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .rail-item.active .rail-pip {
+      background: var(--accent-amber);
+      box-shadow: 0 0 12px var(--accent-amber);
+      transform: scale(1.4);
+    }
+
+    .rail-text {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Scroll Story Cards */
+    main {
+      position: relative;
+      z-index: 20;
+    }
+
+    .chapter {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 100px 6vw;
+    }
+
+    .editorial-card {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 515px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-left: 2px solid var(--accent-amber);
+      border-radius: 18px;
+      padding: 30px 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+      opacity: 0.35;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.4s ease;
+    }
+
+    .editorial-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: radial-gradient(
+        420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(245, 185, 113, 0.11),
+        rgba(110, 231, 183, 0.04) 40%,
+        transparent 70%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .editorial-card:hover::before {
+      opacity: 1;
+    }
+
+    .chapter.in-view .editorial-card {
+      opacity: 1;
+      transform: translate3d(var(--card-shift-x, 0px), var(--card-shift-y, 0px), 0);
+    }
+
+    @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+      .parallax-layer,
+      #petalsCanvas {
+        transform: none !important;
+      }
+      .editorial-card::before {
+        display: none;
+      }
+      .chapter.in-view .editorial-card {
+        transform: translateY(0) !important;
+      }
+    }
+
+    .chapter-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      margin-bottom: 10px;
+    }
+
+    .chapter-eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: var(--accent-amber);
+    }
+
+    .chapter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .chapter-sub {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--accent-jade);
+      margin-bottom: 12px;
+    }
+
+    .chapter-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-amber);
+      background: rgba(245, 185, 113, 0.08);
+      border: 1px solid rgba(245, 185, 113, 0.32);
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .role-points {
+      margin: 4px 0 0 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .role-row .chapter-metrics {
+      margin: 6px 0 2px;
+    }
+
+    .chapter-summary {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .chapter-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chapter-points li {
+      font-size: 0.83rem;
+      color: #e2e8e5;
+      padding-left: 15px;
+      position: relative;
+    }
+
+    .chapter-points li::before {
+      content: "›";
+      position: absolute;
+      left: 0;
+      color: var(--accent-amber);
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .proj-link {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--accent-jade);
+      text-decoration: none;
+      border: 1px solid rgba(110, 231, 183, 0.28);
+      background: rgba(110, 231, 183, 0.07);
+      padding: 4px 11px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+
+    .proj-link:hover {
+      background: rgba(110, 231, 183, 0.18);
+      border-color: var(--accent-jade);
+    }
+
+    .arch-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 185, 113, 0.42);
+      background: rgba(245, 185, 113, 0.1);
+      padding: 4px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: all 0.22s ease;
+    }
+
+    .arch-trigger-btn:hover {
+      background: rgba(245, 185, 113, 0.2);
+      border-color: var(--accent-amber);
+      box-shadow: 0 0 18px rgba(245, 185, 113, 0.22);
+      transform: translateY(-1px);
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      font-size: 0.71rem;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #d1dad6;
+    }
+
+    /* Recruiter Quick-Bar Dock (Replaces static .scroll-cue) */
+    .recruiter-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 28px;
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      max-width: calc(100vw - 56px);
+      background: rgba(13, 17, 16, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 18px 46px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(245, 185, 113, 0.16),
+        inset 0 -1px 0 rgba(110, 231, 183, 0.14);
+      border-radius: 999px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .dock-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(110, 231, 183, 0.08);
+      border: 1px solid rgba(110, 231, 183, 0.24);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent-jade);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-jade);
+      box-shadow: 0 0 8px var(--accent-jade);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .status-dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(110, 231, 183, 0.65);
+      animation: statusPulse 2.2s infinite ease-out;
+    }
+
+    @keyframes statusPulse {
+      0% { transform: scale(0.75); opacity: 0.9; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    .dock-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    .dock-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.22s ease;
+    }
+
+    .dock-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+
+    .dock-btn:hover {
+      border-color: rgba(245, 185, 113, 0.55);
+      color: var(--accent-amber);
+      background: rgba(245, 185, 113, 0.09);
+    }
+
+    .dock-btn.is-copied {
+      border-color: rgba(110, 231, 183, 0.65);
+      color: var(--accent-jade);
+      background: rgba(110, 231, 183, 0.14);
+    }
+
+    .dock-btn-amber {
+      background: var(--accent-amber);
+      border-color: var(--accent-amber);
+      color: #14100c;
+      font-weight: 600;
+    }
+
+    .dock-btn-amber:hover {
+      background: #fbd09b;
+      border-color: #fbd09b;
+      color: #14100c;
+    }
+
+    .dock-btn-pdf {
+      padding: 6px 9px;
+      border-color: rgba(245, 185, 113, 0.35);
+      color: var(--accent-amber);
+      background: rgba(245, 185, 113, 0.08);
+    }
+
+    .dock-scroll-pill {
+      padding: 6px 10px;
+      font-size: 0.69rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .dock-scroll-pill:hover {
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Subtle Copy Toast */
+    .quick-toast {
+      position: fixed;
+      bottom: 82px;
+      left: 28px;
+      z-index: 46;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(13, 17, 16, 0.92);
+      border: 1px solid rgba(110, 231, 183, 0.45);
+      color: var(--accent-jade);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .quick-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Classic Resume Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(6, 9, 8, 0.88);
+      backdrop-filter: blur(14px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .resume-sheet {
+      background: #111614;
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      max-width: 820px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 38px 42px;
+      color: var(--text-main);
+    }
+
+    .resume-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      gap: 16px;
+    }
+
+    .resume-block {
+      margin-bottom: 20px;
+    }
+
+    .resume-block h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-amber);
+      margin-bottom: 10px;
+    }
+
+    .role-row {
+      margin-bottom: 12px;
+    }
+
+    .role-title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .role-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* System Architecture Blueprint Modal */
+    .arch-modal-overlay {
+      z-index: 110;
+      padding: 20px;
+    }
+
+    .arch-sheet {
+      position: relative;
+      width: 100%;
+      max-width: 1120px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background:
+        radial-gradient(900px circle at 12% 0%, rgba(245, 185, 113, 0.08), transparent 55%),
+        radial-gradient(800px circle at 88% 100%, rgba(110, 231, 183, 0.07), transparent 55%),
+        rgba(12, 16, 15, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-top: 2px solid var(--accent-amber);
+      border-radius: 22px;
+      padding: 28px 32px 30px;
+      color: var(--text-main);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.78);
+    }
+
+    .arch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .arch-eyebrow-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .arch-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .arch-eyebrow::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: var(--accent-amber);
+    }
+
+    .arch-tabs {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 4px;
+      border-radius: 999px;
+    }
+
+    .arch-tab {
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .arch-tab:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .arch-tab.active {
+      color: #14100c;
+      background: var(--accent-amber);
+      border-color: var(--accent-amber);
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(245, 185, 113, 0.28);
+    }
+
+    .arch-close-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 6px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .arch-close-btn:hover {
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+      background: rgba(245, 185, 113, 0.08);
+    }
+
+    .arch-meta {
+      padding: 20px 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .arch-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .arch-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.95rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text-main);
+    }
+
+    .arch-role-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-jade);
+      background: rgba(110, 231, 183, 0.1);
+      border: 1px solid rgba(110, 231, 183, 0.32);
+      padding: 4px 11px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .arch-summary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 760px;
+    }
+
+    /* Visual Node-and-Edge Pipeline Diagram */
+    .arch-blueprint-box {
+      position: relative;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        rgba(8, 11, 10, 0.72);
+      background-size: 26px 26px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      margin-bottom: 20px;
+    }
+
+    .arch-pipeline {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 0;
+      width: 100%;
+    }
+
+    .arch-node {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(17, 23, 21, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 2px solid rgba(110, 231, 183, 0.55);
+      border-radius: 13px;
+      padding: 13px 13px 12px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .arch-node:hover {
+      transform: translateY(-3px);
+      border-color: rgba(245, 185, 113, 0.55);
+      border-top-color: var(--accent-amber);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.55), 0 0 20px rgba(245, 185, 113, 0.1);
+    }
+
+    .arch-node-stage {
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      margin-bottom: 5px;
+    }
+
+    .arch-node-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.32;
+      color: var(--text-main);
+      margin-bottom: 9px;
+      word-break: break-word;
+    }
+
+    .arch-node-techs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 9px;
+    }
+
+    .arch-node-tech {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: #cbd5d0;
+    }
+
+    .arch-node-scale {
+      font-size: 0.67rem;
+      color: var(--accent-jade);
+      padding-top: 7px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      line-height: 1.35;
+    }
+
+    .arch-connector {
+      flex: 0 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .arch-connector-h {
+      width: 32px;
+      height: 24px;
+      display: block;
+    }
+
+    .arch-connector-v {
+      width: 24px;
+      height: 28px;
+      display: none;
+    }
+
+    .arch-flow-line {
+      stroke: rgba(245, 185, 113, 0.5);
+      stroke-width: 1.6;
+      stroke-dasharray: 4 4;
+      fill: none;
+      animation: archDashFlow 1.4s linear infinite;
+    }
+
+    .arch-flow-arrow {
+      fill: var(--accent-amber);
+    }
+
+    .arch-flow-pulse {
+      fill: var(--accent-jade);
+      filter: drop-shadow(0 0 4px var(--accent-jade));
+    }
+
+    @keyframes archDashFlow {
+      to {
+        stroke-dashoffset: -16;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .arch-flow-line {
+        animation: none;
+      }
+      .arch-flow-pulse {
+        display: none;
+      }
+    }
+
+    /* Engineering Highlights Grid */
+    .arch-highlights-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .arch-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .arch-highlight-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-left: 2px solid var(--accent-jade);
+      border-radius: 12px;
+      padding: 13px 15px;
+    }
+
+    .arch-highlight-card h5 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .arch-highlight-card p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.48;
+    }
+
+    @media (max-width: 960px) {
+      .arch-sheet {
+        padding: 22px 20px;
+      }
+      .arch-pipeline {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .arch-connector {
+        flex: 0 0 28px;
+        width: 100%;
+      }
+      .arch-connector-h {
+        display: none;
+      }
+      .arch-connector-v {
+        display: block;
+      }
+      .arch-highlights {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .arch-modal-overlay {
+        padding: 10px;
+      }
+      .arch-sheet {
+        padding: 18px 14px;
+        border-radius: 16px;
+        max-height: 92vh;
+      }
+      .arch-title {
+        font-size: 1.55rem;
+      }
+      .arch-blueprint-box {
+        padding: 14px 12px;
+      }
+    }
+
+    @media print {
+      #archModal {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .chapter {
+        padding: 96px 4vw;
+      }
+      .editorial-card {
+        max-width: 460px;
+        padding: 26px 28px;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .bg-image {
+        object-position: center 20%;
+      }
+      .chapter {
+        min-height: 100svh;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 90px 18px 92px;
+      }
+      .editorial-card {
+        max-width: 560px;
+        padding: 24px 24px;
+      }
+      .rail, .connector-layer {
+        display: none;
+      }
+      header {
+        padding: 16px 20px;
+      }
+      .stage-vignette {
+        background: linear-gradient(180deg, rgba(11, 14, 13, 0.55) 0%, rgba(11, 14, 13, 0.2) 32%, rgba(11, 14, 13, 0.92) 72%);
+      }
+      .recruiter-dock {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        max-width: none;
+        justify-content: space-between;
+        padding: 6px 8px;
+        gap: 4px;
+        border-radius: 16px;
+      }
+      .dock-status {
+        padding: 5px 8px;
+        font-size: 0.68rem;
+      }
+      .dock-status-full {
+        display: none;
+      }
+      .dock-status-short {
+        display: inline;
+      }
+      .dock-divider {
+        display: none;
+      }
+      .dock-btn {
+        padding: 7px 10px;
+        font-size: 0.72rem;
+        gap: 5px;
+      }
+      .dock-scroll-pill {
+        display: none;
+      }
+      .quick-toast {
+        left: 50%;
+        bottom: 74px;
+        transform: translate(-50%, 8px);
+      }
+      .quick-toast.show {
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .dock-status-short {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .brand-name {
+        font-size: 1.35rem;
+      }
+      .brand-sub {
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+      }
+      .header-actions {
+        gap: 8px;
+      }
+      .header-github {
+        display: none; /* already in the dock on phones */
+      }
+      .btn-editorial {
+        padding: 7px 12px;
+        font-size: 0.72rem;
+      }
+      .chapter {
+        padding: 80px 12px 84px;
+      }
+      .editorial-card {
+        padding: 20px 18px;
+        border-radius: 14px;
+      }
+      .chapter-title {
+        font-size: 1.55rem;
+      }
+      .chapter-sub {
+        font-size: 0.8rem;
+      }
+      .chapter-summary,
+      .chapter-points li {
+        font-size: 0.8rem;
+      }
+      .resume-sheet {
+        padding: 22px 16px;
+        border-radius: 14px;
+      }
+      .resume-top {
+        flex-direction: column;
+      }
+      .recruiter-dock {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        padding: 5px 6px;
+        gap: 4px;
+        border-radius: 14px;
+      }
+      .dock-status {
+        padding: 6px 7px;
+      }
+      .dock-status-short {
+        display: none;
+      }
+      .dock-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 7px 6px;
+        font-size: 0.68rem;
+        min-width: 0;
+      }
+      .dock-btn-pdf {
+        flex: 0 0 auto;
+        padding: 7px 8px;
+      }
+    }
+
+    @media print {
+      /* Print only the CV, in normal flow so it spans multiple pages */
+      body { background: #fff; }
+      body > *:not(#cvModal) { display: none !important; }
+      #cvModal {
+        display: block !important;
+        position: static;
+        padding: 0;
+        background: none;
+        backdrop-filter: none;
+      }
+      .resume-sheet {
+        background: #fff;
+        border: none;
+        border-radius: 0;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+      }
+      .resume-sheet * { color: #111 !important; } /* beats the dark-theme inline colors */
+      .resume-sheet .role-points, .resume-sheet .resume-top p { color: #444 !important; }
+      .resume-sheet h4 { color: #8a5a1c !important; }
+      .resume-sheet .metric { background: none; border-color: #bbb; }
+      .resume-top .btn-editorial { display: none; }
+      .role-row { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cinematic Bonsai Background Stage -->
+  <div class="stage">
+    <div class="bg-wrapper" id="bgWrapper">
+      <div class="parallax-layer" id="parallaxLayer">
+        <img src="bg.jpg" alt="Sculptural Sakura Bonsai Tree" class="bg-image" />
+        <div class="tree-beacon" id="treeBeacon" style="top: 18%; left: 32%;"></div>
+      </div>
+    </div>
+    <div class="stage-vignette"></div>
+    <canvas id="petalsCanvas"></canvas>
+  </div>
+
+  <!-- Dynamic SVG Hairline Connector (Branch Node -> Active Editorial Card) -->
+  <svg class="connector-layer" id="connectorSvg">
+    <defs>
+      <linearGradient id="connectorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#f5b971" stop-opacity="0.95" />
+        <stop offset="65%" stop-color="#f5b971" stop-opacity="0.65" />
+        <stop offset="100%" stop-color="#6ee7b7" stop-opacity="0.95" />
+      </linearGradient>
+    </defs>
+    <path class="connector-path" id="connectorPath" d="" />
+    <circle class="connector-joint" id="connectorJoint" cx="0" cy="0" r="3.5" />
+    <circle class="connector-terminal" id="connectorTerminal" cx="0" cy="0" r="4" />
+  </svg>
+
+  <!-- Minimal Editorial Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-name">Iman Ranjbar</div>
+      <div class="brand-sub">AI Engineer · LLMs · RAG · Agents · Computer Vision · MLOps</div>
+    </div>
+    <div class="header-actions">
+      <a href="https://www.linkedin.com/in/imanranjbar/" target="_blank" rel="noopener" class="btn-editorial">LinkedIn</a>
+      <a href="https://github.com/imanrnj" target="_blank" rel="noopener" class="btn-editorial header-github">GitHub</a>
+      <button class="btn-editorial btn-accent" id="openCvBtn">Classic CV / PDF</button>
+    </div>
+  </header>
+
+  <!-- Left Chapter Rail -->
+  <nav class="rail" id="chapterRail"></nav>
+
+  <!-- Scroll Chapters -->
+  <main id="chaptersRoot"></main>
+
+  <!-- Recruiter Quick-Bar Dock -->
+  <aside class="recruiter-dock" id="recruiterDock" aria-label="Recruiter Quick-Bar">
+    <div class="dock-status" title="Open to Remote / Global AI Roles">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="dock-status-full">Open to Remote / Global AI Roles</span>
+      <span class="dock-status-short">Open to AI Roles</span>
+    </div>
+
+    <span class="dock-divider" aria-hidden="true"></span>
+
+    <button type="button" class="dock-btn" id="copyEmailBtn" title="Copy iman.ranjbar@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+      <span class="dock-btn-label">Copy Email</span>
+    </button>
+
+    <a href="https://github.com/imanrnj" target="_blank" rel="noopener" class="dock-btn" title="GitHub Profile (github.com/imanrnj)">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.4-5.26 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" />
+      </svg>
+      <span class="dock-btn-label">GitHub</span>
+    </a>
+
+
+    <button type="button" class="dock-btn dock-btn-amber" id="dockResumeBtn" title="Open Classic Resume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+      <span class="dock-btn-label">Resume / PDF</span>
+    </button>
+
+    <button type="button" class="dock-btn dock-btn-pdf" id="dockPrintBtn" title="Download / Print PDF" aria-label="Download PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+    </button>
+
+    <button type="button" class="dock-btn dock-scroll-pill" id="dockScrollBtn" title="Navigate Chapters">01/06 ↓</button>
+  </aside>
+
+  <div class="quick-toast" id="quickToast" role="status" aria-live="polite"></div>
+
+  <!-- Classic CV Modal -->
+  <div class="modal-overlay" id="cvModal">
+    <div class="resume-sheet">
+      <div class="resume-top">
+        <div>
+          <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.1rem; line-height: 1.1;">Iman Ranjbar</h2>
+          <p style="color: var(--accent-jade); font-size: 0.88rem; margin-top: 4px;">AI Engineer | LLMs | RAG | Agents | Computer Vision | MLOps</p>
+          <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">
+            Tehran, Iran · iman.ranjbar@gmail.com · github.com/imanrnj · linkedin.com/in/imanranjbar
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-editorial btn-accent" onclick="window.print()">Print / PDF</button>
+          <button class="btn-editorial" id="closeCvBtn">Close</button>
+        </div>
+      </div>
+
+      <div class="resume-block">
+        <h4>Professional Summary</h4>
+        <p style="font-size: 0.85rem; color: #dce3df;">
+          AI Engineer and technical leader with experience building production AI systems across LLMs, RAG, multi-agent workflows, voice AI, computer vision, and MLOps. Strong background in FastAPI backend development, GPU deployment, prompt design, model serving, and cross-functional delivery with product, engineering, and design teams. Experienced in turning research prototypes into practical, scalable systems for real-world business use.
+        </p>
+      </div>
+
+      <div class="resume-block">
+        <h4>Core Skills</h4>
+        <p style="font-size: 0.82rem; color: #cbd5e1;">
+          Python, FastAPI, OpenAI API, LangChain, LangGraph, RAG, Vector Databases, Qdrant, Weaviate, Embeddings, Prompt Engineering, Agentic Workflows, Voice AI, ElevenLabs, Langfuse, Machine Learning, Deep Learning, TensorFlow, PyTorch, OpenCV, Stable Diffusion, LoRA, MLOps, Docker, CI/CD, GPU Deployment, Observability, Microservices, SQL Server, Elasticsearch, Streamlit, Power BI, n8n, Cursor, Backend Architecture.
+        </p>
+      </div>
+
+      <div class="resume-block">
+        <h4>Professional Experience</h4>
+        <div class="role-row">
+          <div class="role-title"><span>AI Engineer — Connexing (Assistify AI), Dallas, TX, USA</span><span>Full-time · Jan 2026 – Present</span></div>
+          <div class="chapter-metrics"><span class="metric">Latency 2.5s → &lt;1s</span><span class="metric">4 Agents · 10 Tools</span><span class="metric">98% RAG Accuracy</span></div>
+          <ul class="role-points">
+            <li>Built a 24/7 AI voice agent and admin copilot for a multi-tenant HOA management platform, serving 1,000+ residential units in production.</li>
+            <li>Proposed and led the migration from Vapi to a tool-based ElevenLabs architecture, cutting average response latency from 2.5s to under 1s while lowering cost per call and improving answer accuracy.</li>
+            <li>Designed a multi-agent system with 4 specialized agents and 10 tools for resident-facing workflows.</li>
+            <li>Built tenant-isolated RAG over ~100 governing documents per community, reaching 98%+ accuracy on a large ground-truth Q&amp;A eval set in Langfuse, which reduced resident calls and emails on policy questions and sped up document lookup for admins.</li>
+            <li>Co-authored feature specifications and drove technical feasibility and prioritization with product, engineering, and design teams.</li>
+          </ul>
+        </div>
+        <div class="role-row">
+          <div class="role-title"><span>AI Engineer — FlyToday, Tehran, Iran</span><span>Full-time · Oct 2025 – Nov 2025</span></div>
+          <ul class="role-points">
+            <li>Built rapid AI prototypes for internal process automation and decision support.</li>
+            <li>Designed NLP workflows to extract structured filters and user intent from unstructured input.</li>
+            <li>Developed OpenAI-based content generation and prompt orchestration workflows for backend integration.</li>
+            <li>Supported scalable AI pipelines for real-time and batch processing use cases.</li>
+          </ul>
+        </div>
+        <div class="role-row">
+          <div class="role-title"><span>AI Engineer — WeddinglyAi, Dallas, TX, USA</span><span>Part-time · Sep 2024 – Dec 2025</span></div>
+          <div class="chapter-metrics"><span class="metric">&lt;3s Generation</span><span class="metric">Cold Start 15s → &lt;5s</span><span class="metric">5+ Providers with Fallback</span></div>
+          <ul class="role-points">
+            <li>Designed computer vision pipelines for AI wedding image generation, focused on pose consistency, identity preservation and visual quality.</li>
+            <li>Fine-tuned Stable Diffusion with LoRA adapters for identity consistency, validated through A/B testing and human review.</li>
+            <li>Optimized GPU inference on RunPod to under 3s per image and reduced cold starts from 15s to under 5s.</li>
+            <li>Unified 5+ image generation providers (Flux, Ideogram, Runware, Stability, Replicate) into one inference layer with automatic fallback.</li>
+          </ul>
+        </div>
+        <div class="role-row">
+          <div class="role-title"><span>AI Engineer &amp; CTO — Sib Irani, Tehran, Iran · AI Talos, Dubai, UAE</span><span>Full-time · Oct 2020 – Oct 2025</span></div>
+          <div class="chapter-metrics"><span class="metric">3M+ Users · 500K DAU</span><span class="metric">99%+ Uptime</span><span class="metric">100+ Shopify Stores</span></div>
+          <ul class="role-points">
+            <li>As CTO, owned the backend architecture and led a 6-person engineering team for a consumer platform with 3M+ registered users, 500K daily actives and millions of API requests per day.</li>
+            <li>Kept services above 99% uptime and cut deployment time to under 2 minutes using containerization, CI/CD and lazy loading.</li>
+            <li>Built a thermography-based breast cancer screening model trained on 1,500 images (AUC ~0.90, sensitivity 90%+, specificity 85 to 90%), clinically validated at two medical centers on unseen images with 85% accuracy. Published November 2022.</li>
+            <li>Architected FaceAge and Hair Analyze from scratch as sole AI architect, covering 15+ skin, face and hair attributes with 75%+ validated accuracy on subjective aesthetic assessments.</li>
+            <li>Shipped FaceAge and Hair Analyze as a Shopify app now installed and used by 100+ stores.</li>
+            <li>Designed and deployed RAG systems and multi-agent architectures using LangChain, CrewAI, Qdrant, and Weaviate.</li>
+          </ul>
+        </div>
+        <div class="role-row">
+          <div class="role-title"><span>Consulting — IWish Co · Adora AI</span><span>Part-time / Contract · Mar 2022 – Jan 2025</span></div>
+          <ul class="role-points">
+            <li><strong>Fractional CTO, IWish Co</strong> (Tehran, Nov 2022 – Oct 2023): set technology strategy, led engineering decisions and managed technical risk alongside stakeholders.</li>
+            <li><strong>AI Engineer, Adora AI</strong> (Dubai, Mar 2022 – Jan 2025): built ML-based carpet palette analysis and design, plus backend integrations and GPU server setup for model serving.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resume-block">
+        <h4>Selected Projects</h4>
+        <ul class="role-points">
+          <li><strong>Enterprise Approval Management System:</strong> Designed and implemented a centralized approval management system for a national-level organization, including scalable database architecture, Power BI dashboards, internal deployment, and ongoing support.</li>
+          <li><strong>Automatic Detection System for Galvanized Steel Sheets:</strong> Built a computer vision system for detecting width and surface defects in a production environment.</li>
+          <li><strong>Recommender System for an Online Book Store:</strong> Developed a machine learning-based recommender system using user behavior and browsing patterns.</li>
+          <li><strong>Intelligent Placement System for Retail Items:</strong> Created a data-driven system for optimizing product placement from invoice and sales data.</li>
+        </ul>
+      </div>
+
+      <div class="resume-block">
+        <h4>Education</h4>
+        <p style="font-size: 0.83rem; color: #dce3df;">
+          <strong>Master of Computer Engineering (Software Engineering)</strong> — Kashan University, Kashan, Iran (2016–2020 · GPA: 17.91/20)<br/>
+          <strong>Bachelor of Computer Engineering (Software Engineering)</strong> — Islamic Azad University, Kashan, Iran (2011–2015 · GPA: 17.75/20)<br/>
+          <strong>Diploma in Mathematics and Physics</strong> — Shahid Beheshti (NODET), Kashan, Iran (2007–2011)
+        </p>
+      </div>
+
+      <div class="resume-block">
+        <h4>Certifications &amp; Languages</h4>
+        <p style="font-size: 0.83rem; color: #dce3df;">
+          Machine Learning Specialization — Stanford Online / Coursera<br/>
+          Languages: English (Professional) · Persian (Native)
+        </p>
+      </div>
+
+      <div class="resume-block">
+        <h4>Publications</h4>
+        <ul class="role-points">
+          <li>A Novel Thermography-Based Artificial Intelligence-Powered Solution for Screening Breast Cancer, November 2022.</li>
+          <li>RRARM: A Novel Approach in Rare Association Rule Mining by Return and Re-Evaluate the Data, February 2020.</li>
+          <li>Fast Detection of k-Clique Communities on Large Networks, January 2018.</li>
+          <li>Summarizing Persian Texts Using Word Association and Hierarchical Analysis Process, June 2017.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Architecture Blueprint Modal -->
+  <div class="modal-overlay arch-modal-overlay" id="archModal" role="dialog" aria-modal="true" aria-labelledby="archTitle">
+    <div class="arch-sheet">
+      <div class="arch-header">
+        <div class="arch-eyebrow-group">
+          <span class="arch-eyebrow">Architecture &amp; Live Proof</span>
+        </div>
+
+        <div class="arch-tabs" role="tablist" aria-label="Flagship System Architectures">
+          <button type="button" class="arch-tab" role="tab" data-arch-tab="assistify" aria-selected="false">Assistify AI</button>
+          <button type="button" class="arch-tab" role="tab" data-arch-tab="weddingly" aria-selected="false">WeddinglyAi</button>
+          <button type="button" class="arch-tab" role="tab" data-arch-tab="faceage" aria-selected="false">FaceAge</button>
+        </div>
+
+        <button type="button" class="arch-close-btn" id="closeArchBtn" aria-label="Close Architecture Modal">Close ✕</button>
+      </div>
+
+      <div class="arch-meta">
+        <div>
+          <div class="arch-title-row">
+            <h2 class="arch-title" id="archTitle"></h2>
+            <span class="arch-role-badge" id="archRole"></span>
+          </div>
+          <p class="arch-summary" id="archSummary"></p>
+        </div>
+        <a href="#" target="_blank" rel="noopener" class="proj-link" id="archLiveLink"></a>
+      </div>
+
+      <div class="arch-blueprint-box">
+        <div class="arch-pipeline" id="archPipeline"></div>
+      </div>
+
+      <div class="arch-highlights-title">Engineering Highlights &amp; Production Guardrails</div>
+      <div class="arch-highlights" id="archHighlights"></div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Curated Chapters Mapped Directly to Regions of bg.jpg (Canopy -> Trunk -> Roots)
+    const chapters = [
+      {
+        rail: 'Canopy · Overview',
+        eyebrow: '01 · Current Focus',
+        title: 'AI Engineer & Technical Leader',
+        subtitle: 'LLMs · RAG · Multi-Agent Systems · Computer Vision · MLOps',
+        summary: 'Cultivating production-grade AI systems by bridging deep research with resilient backend engineering and cross-functional leadership.',
+        points: [
+          'Production FastAPI microservices, GPU inference optimization & MLOps pipelines',
+          'Agentic orchestration, RAG architectures & generative computer vision',
+          'Based in Tehran · Delivering globally across USA, UAE, and Iran'
+        ],
+        links: [
+          { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/imanranjbar/' },
+          { label: 'github.com/imanrnj ↗', url: 'https://github.com/imanrnj' }
+        ],
+        tags: ['Python', 'FastAPI', 'OpenAI API', 'LangGraph', 'PyTorch', 'Docker', 'MLOps'],
+        transform: 'scale(1.14) translate(2%, 6%)',
+        beacon: { top: '20%', left: '34%' }
+      },
+      {
+        rail: '2026 · Connexing & Assistify',
+        eyebrow: '02 · Jan 2026 – Present',
+        title: 'AI Engineer · Connexing & Assistify AI',
+        subtitle: 'Connexing (Assistify AI) · Dallas, TX, USA · Full-time',
+        metrics: ['Latency 2.5s → <1s', '4 Agents · 10 Tools', '98% RAG Accuracy'],
+        summary: '24/7 AI voice agent and admin copilot for a multi-tenant HOA management platform, serving 1,000+ residential units in production.',
+        points: [
+          'Proposed and led the Vapi → ElevenLabs tool-based migration, cutting response latency from 2.5s to under 1s while lowering cost per call',
+          'Designed a multi-agent system with 4 specialized agents and 10 tools for resident-facing workflows',
+          'Built tenant-isolated RAG over ~100 governing documents per community, reaching 98%+ accuracy on a ground-truth eval set in Langfuse'
+        ],
+        links: [
+          { label: 'connexing.ai ↗', url: 'https://connexing.ai/' },
+          { label: 'assistify.ai ↗', url: 'https://assistify.ai/' }
+        ],
+        archKey: 'assistify',
+        tags: ['ElevenLabs', 'Voice AI', 'Multi-Agent', 'RAG', 'Langfuse', 'OpenAI'],
+        transform: 'scale(1.22) translate(0%, 2%)',
+        beacon: { top: '26%', left: '47%' }
+      },
+      {
+        rail: '2024–2025 · WeddinglyAi & NLP',
+        eyebrow: '03 · Sep 2024 – Dec 2025',
+        title: 'AI Engineer · WeddinglyAi & FlyToday',
+        subtitle: 'WeddinglyAi (Dallas, USA) · Part-time  ·  FlyToday (Tehran) · Full-time',
+        metrics: ['<3s Generation', 'Cold Start 15s → <5s', '5+ Providers with Fallback'],
+        summary: 'Computer vision pipelines for AI wedding image generation at WeddinglyAi, plus NLP intent-extraction workflows at FlyToday.',
+        points: [
+          'Fine-tuned Stable Diffusion with LoRA adapters for identity consistency, validated through A/B testing and human review',
+          'Optimized RunPod GPU inference to under 3s per image and cut cold starts from 15s to under 5s',
+          'Unified Flux, Ideogram, Runware, Stability & Replicate into one inference layer with automatic fallback',
+          'FlyToday: NLP workflows extracting structured filters & user intent, plus OpenAI content generation'
+        ],
+        links: [
+          { label: 'weddingly.ai ↗', url: 'https://weddingly.ai/' }
+        ],
+        archKey: 'weddingly',
+        tags: ['Stable Diffusion', 'LoRA', 'FLUX', 'Ideogram 3', 'RunPod GPU', 'NLP'],
+        transform: 'scale(1.25) translate(-2%, -4%)',
+        beacon: { top: '48%', left: '53%' }
+      },
+      {
+        rail: '2020–2025 · FaceAge & CTO',
+        eyebrow: '04 · Oct 2020 – Oct 2025',
+        title: 'AI Engineer & CTO',
+        subtitle: 'Sib Irani / AI Talos · Full-time  ·  Consulting (Part-time / Contract): IWish Co & Adora AI',
+        metrics: ['3M+ Users · 500K DAU', '99%+ Uptime', '100+ Shopify Stores'],
+        summary: 'Owned backend architecture as CTO and served as sole AI architect for FaceAge & Hair Analyze, alongside medical imaging research.',
+        points: [
+          'Led a 6-person engineering team for a consumer platform with 3M+ users and millions of API requests per day; deployments cut to under 2 minutes',
+          'Architected FaceAge & Hair Analyze from scratch: 15+ skin, face & hair attributes, shipped as a Shopify app used by 100+ stores',
+          'Thermography breast cancer screening model (AUC ~0.90), clinically validated at two medical centers'
+        ],
+        links: [
+          { label: 'getfaceage.com ↗', url: 'https://getfaceage.com/' }
+        ],
+        archKey: 'faceage',
+        tags: ['PyTorch', 'TensorFlow', 'OpenCV', 'FastAPI', 'CI/CD', 'CrewAI', 'CTO'],
+        transform: 'scale(1.24) translate(4%, -8%)',
+        beacon: { top: '53%', left: '24%' }
+      },
+      {
+        rail: 'Projects & Papers',
+        eyebrow: '05 · Research & Systems',
+        title: 'Selected Systems & Publications',
+        subtitle: 'Industrial Computer Vision, ML Systems & 4 Papers',
+        summary: 'Applied machine learning and computer vision deployed in manufacturing, retail analytics, and national organizations.',
+        points: [
+          'Automatic width & surface defect detection for galvanized steel sheets in production (CV)',
+          'National-level enterprise approval management system with Power BI dashboards',
+          'ML recommender for an online bookstore & data-driven retail item placement',
+          'Papers: Thermography AI (2022), RRARM (2020), k-Clique (2018), Persian NLP (2017)'
+        ],
+        links: [],
+        tags: ['Computer Vision', 'Recommender Systems', 'Power BI', 'Peer-Reviewed Research'],
+        transform: 'scale(1.36) translate(-3%, -11%)',
+        beacon: { top: '65%', left: '61%' }
+      },
+      {
+        rail: 'Soil & Roots · Education',
+        eyebrow: '06 · Education · 2007 – 2020',
+        title: 'Academic Roots & Contact',
+        subtitle: 'Kashan University · IAU Kashan · NODET (Shahid Beheshti)',
+        summary: 'Deep software engineering and mathematical foundations cultivated in Kashan, Iran.',
+        points: [
+          'M.Sc. Computer Engineering (Software) — Kashan University (2016–2020 · GPA: 17.91/20)',
+          'B.Sc. Computer Engineering (Software) — Islamic Azad University, Kashan (2011–2015 · GPA: 17.75/20)',
+          'Diploma in Math & Physics — Shahid Beheshti (NODET), Kashan',
+          'Machine Learning Specialization — Stanford Online / Coursera'
+        ],
+        links: [
+          { label: 'iman.ranjbar@gmail.com', url: 'mailto:iman.ranjbar@gmail.com' },
+          { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/imanranjbar/' }
+        ],
+        tags: ['github.com/imanrnj', 'Tehran, Iran'],
+        transform: 'scale(1.42) translate(3%, -13%)',
+        beacon: { top: '76%', left: '31%' }
+      }
+    ];
+
+    // 2. Render Chapters & Navigation Rail
+    const chaptersRoot = document.getElementById('chaptersRoot');
+    const chapterRail = document.getElementById('chapterRail');
+
+    chapters.forEach((ch, index) => {
+      const linkItems = (ch.links || []).map(
+        l => `<a href="${l.url}" target="_blank" rel="noopener" class="proj-link">${l.label}</a>`
+      );
+      if (ch.archKey) {
+        linkItems.push(
+          `<button type="button" class="arch-trigger-btn" data-arch="${ch.archKey}">System Architecture ⬡</button>`
+        );
+      }
+      const linksHTML = linkItems.length
+        ? `<div class="project-links">${linkItems.join('')}</div>`
+        : '';
+
+      const section = document.createElement('section');
+      section.className = `chapter ${index === 0 ? 'in-view' : ''}`;
+      section.dataset.index = index;
+      section.innerHTML = `
+        <article class="editorial-card">
+          <div class="chapter-eyebrow">${ch.eyebrow}</div>
+          <h2 class="chapter-title">${ch.title}</h2>
+          <div class="chapter-sub">${ch.subtitle}</div>
+          ${ch.metrics ? `<div class="chapter-metrics">${ch.metrics.map(m => `<span class="metric">${m}</span>`).join('')}</div>` : ''}
+          <p class="chapter-summary">${ch.summary}</p>
+          <ul class="chapter-points">
+            ${ch.points.map(p => `<li>${p}</li>`).join('')}
+          </ul>
+          ${linksHTML}
+          <div class="skill-pills">
+            ${ch.tags.map(t => `<span class="pill">${t}</span>`).join('')}
+          </div>
+        </article>
+      `;
+      chaptersRoot.appendChild(section);
+
+      const railItem = document.createElement('div');
+      railItem.className = `rail-item ${index === 0 ? 'active' : ''}`;
+      railItem.innerHTML = `<span class="rail-pip"></span><span class="rail-text">${ch.rail}</span>`;
+      railItem.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth' }));
+      chapterRail.appendChild(railItem);
+    });
+
+    // 3. Scroll-Driven Camera Choreography & Dynamic SVG Connector
+    const bgWrapper = document.getElementById('bgWrapper');
+    const treeBeacon = document.getElementById('treeBeacon');
+    const dockScrollBtn = document.getElementById('dockScrollBtn');
+    const railItems = document.querySelectorAll('.rail-item');
+    const chapterEls = document.querySelectorAll('.chapter');
+    const cardEls = document.querySelectorAll('.editorial-card');
+
+    const connectorPath = document.getElementById('connectorPath');
+    const connectorJoint = document.getElementById('connectorJoint');
+    const connectorTerminal = document.getElementById('connectorTerminal');
+
+    let activeIdx = 0;
+    let isDrawingStroke = false;
+    let strokeDoneTimer = null;
+
+    function updateConnectorLine(animateStroke = false) {
+      if (window.innerWidth <= 920) return;
+
+      const beaconRect = treeBeacon.getBoundingClientRect();
+      const cardRect = cardEls[activeIdx].getBoundingClientRect();
+
+      const startX = beaconRect.left + beaconRect.width / 2;
+      const startY = beaconRect.top + beaconRect.height / 2;
+
+      const endX = cardRect.left;
+      const endY = Math.min(Math.max(cardRect.top + 46, 110), window.innerHeight - 90);
+
+      // Architectural 45-degree chamfered engineering callout path
+      const elbowX = startX + (endX - startX) * 0.45;
+      const d = `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${elbowX.toFixed(1)} ${endY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`;
+
+      connectorPath.setAttribute('d', d);
+      connectorJoint.setAttribute('cx', elbowX.toFixed(1));
+      connectorJoint.setAttribute('cy', endY.toFixed(1));
+      connectorTerminal.setAttribute('cx', endX.toFixed(1));
+      connectorTerminal.setAttribute('cy', endY.toFixed(1));
+
+      if (animateStroke) {
+        clearTimeout(strokeDoneTimer);
+        isDrawingStroke = true;
+        const len = connectorPath.getTotalLength();
+        connectorPath.style.transition = 'none';
+        connectorPath.style.strokeDasharray = `${len}`;
+        connectorPath.style.strokeDashoffset = `${len}`;
+        connectorPath.getBoundingClientRect(); // trigger reflow
+        connectorPath.style.transition = 'stroke-dashoffset 0.65s cubic-bezier(0.22, 1, 0.36, 1)';
+        connectorPath.style.strokeDashoffset = '0';
+        strokeDoneTimer = setTimeout(() => {
+          isDrawingStroke = false;
+          connectorPath.style.strokeDasharray = 'none';
+          connectorPath.style.strokeDashoffset = '0';
+        }, 680);
+      } else if (isDrawingStroke) {
+        connectorPath.style.strokeDasharray = `${connectorPath.getTotalLength()}`;
+      } else {
+        connectorPath.style.strokeDasharray = 'none';
+      }
+    }
+
+    // Smoothly track beacon & card movement during CSS transitions and scrolling
+    let transitionRafId = null;
+    let transitionStart = 0;
+    const TRANSITION_DURATION_MS = 950;
+
+    function trackConnectorLoop(now) {
+      updateConnectorLine(false);
+      if (now - transitionStart < TRANSITION_DURATION_MS) {
+        transitionRafId = requestAnimationFrame(trackConnectorLoop);
+      } else {
+        transitionRafId = null;
+      }
+    }
+
+    function startTransitionTracking() {
+      if (transitionRafId !== null) {
+        cancelAnimationFrame(transitionRafId);
+      }
+      transitionStart = performance.now();
+      transitionRafId = requestAnimationFrame(trackConnectorLoop);
+    }
+
+    function clampStageTransform(transformStr) {
+      const scaleMatch = transformStr.match(/scale\(\s*([\d.]+)\s*\)/);
+      const transMatch = transformStr.match(/translate\(\s*([-\d.]+)%\s*,\s*([-\d.]+)%\s*\)/);
+      if (!scaleMatch || !transMatch) return transformStr;
+
+      const scale = parseFloat(scaleMatch[1]);
+      const tx = parseFloat(transMatch[1]);
+      const ty = parseFloat(transMatch[2]);
+
+      // Max safe pre-scale translation so image edges never enter the viewport
+      // Reserve 1.2% margin for perspective/tilt; #parallaxLayer provides +/-24px overscan
+      const maxShift = Math.max(0, 50 * (1 - 1 / scale) - 1.2);
+      const clampedX = Math.max(-maxShift, Math.min(maxShift, tx));
+      const clampedY = Math.max(-maxShift, Math.min(maxShift, ty));
+
+      return `scale(${scale}) translate(${clampedX.toFixed(2)}%, ${clampedY.toFixed(2)}%)`;
+    }
+
+    function getResponsiveStageProps(data) {
+      const w = window.innerWidth;
+      if (w <= 640) {
+        // Mobile: keep bonsai centered in upper viewport above bottom-aligned card
+        const topPct = Math.min(parseFloat(data.beacon.top), 36);
+        return {
+          transform: clampStageTransform('scale(1.10) translate(0%, -4%)'),
+          top: `${topPct}%`,
+          left: '50%'
+        };
+      }
+      if (w <= 920) {
+        // Tablet: gentler zoom & centered horizontal framing
+        const topPct = Math.min(parseFloat(data.beacon.top) * 0.72, 42);
+        return {
+          transform: clampStageTransform('scale(1.10) translate(0%, -3%)'),
+          top: `${topPct.toFixed(1)}%`,
+          left: '46%'
+        };
+      }
+      return {
+        transform: clampStageTransform(data.transform),
+        top: data.beacon.top,
+        left: data.beacon.left
+      };
+    }
+
+    function applyStageForChapter(idx) {
+      const data = chapters[idx];
+      const stageProps = getResponsiveStageProps(data);
+      bgWrapper.style.transform = stageProps.transform;
+      treeBeacon.style.top = stageProps.top;
+      treeBeacon.style.left = stageProps.left;
+    }
+
+    function activateChapter(idx) {
+      const changed = activeIdx !== idx;
+      activeIdx = idx;
+
+      applyStageForChapter(idx);
+
+      railItems.forEach((el, i) => el.classList.toggle('active', i === idx));
+      chapterEls.forEach((el, i) => el.classList.toggle('in-view', i === idx));
+
+      const num = String(idx + 1).padStart(2, '0');
+      const total = String(chapters.length).padStart(2, '0');
+      dockScrollBtn.textContent = idx === chapters.length - 1 ? `${num}/${total} · Top ↑` : `${num}/${total} ↓`;
+
+      if (changed) {
+        updateConnectorLine(true);
+      }
+      startTransitionTracking();
+    }
+
+    activateChapter(0);
+    setTimeout(() => updateConnectorLine(true), 120);
+
+    let scrollRafId = null;
+    function scheduleConnectorUpdate() {
+      if (scrollRafId !== null) return;
+      scrollRafId = requestAnimationFrame(() => {
+        scrollRafId = null;
+        updateConnectorLine(false);
+      });
+    }
+
+    window.addEventListener('scroll', scheduleConnectorUpdate, { passive: true });
+    window.addEventListener('resize', () => {
+      applyStageForChapter(activeIdx);
+      scheduleConnectorUpdate();
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          activateChapter(Number(entry.target.dataset.index));
+        }
+      });
+    }, { threshold: 0.52 });
+
+    chapterEls.forEach(el => observer.observe(el));
+
+    // 4. Subtle Drifting Sakura Petals Matching bg.jpg
+    const canvas = document.getElementById('petalsCanvas');
+    const ctx = canvas.getContext('2d');
+    let cw, ch;
+
+    function resizeCanvas() {
+      cw = canvas.width = window.innerWidth;
+      ch = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const petals = Array.from({ length: 28 }, () => ({
+      x: Math.random() * window.innerWidth * 0.65,
+      y: Math.random() * window.innerHeight,
+      size: 2.5 + Math.random() * 3.5,
+      speedY: 0.35 + Math.random() * 0.65,
+      speedX: 0.15 + Math.random() * 0.35,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.02
+    }));
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, cw, ch);
+      petals.forEach(p => {
+        p.y += p.speedY;
+        p.x += Math.sin(p.angle) * 0.45 + p.speedX;
+        p.angle += p.spin;
+
+        if (p.y > ch + 10) {
+          p.y = -10;
+          p.x = Math.random() * cw * 0.65;
+        }
+        if (p.x > cw * 0.72) p.x = Math.random() * cw * 0.2;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size, p.size * 0.58, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(252, 231, 240, 0.55)';
+        ctx.fill();
+        ctx.restore();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // 5. Classic CV Modal Controls
+    const cvModal = document.getElementById('cvModal');
+    document.getElementById('openCvBtn').addEventListener('click', () => cvModal.classList.add('open'));
+    document.getElementById('closeCvBtn').addEventListener('click', () => cvModal.classList.remove('open'));
+    cvModal.addEventListener('click', (e) => {
+      if (e.target === cvModal) cvModal.classList.remove('open');
+    });
+
+    // 5b. Recruiter Quick-Bar Actions (Clipboard + Toast + Resume/PDF + Chapter Nav)
+    const quickToast = document.getElementById('quickToast');
+    let toastTimer = null;
+
+    function showQuickToast(message) {
+      quickToast.textContent = message;
+      quickToast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        quickToast.classList.remove('show');
+      }, 2200);
+    }
+
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {
+          // Fall through to legacy textarea fallback
+        }
+      }
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      textarea.style.pointerEvents = 'none';
+      document.body.appendChild(textarea);
+      textarea.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch (_) {
+        ok = false;
+      }
+      document.body.removeChild(textarea);
+      return ok;
+    }
+
+    function bindCopyButton(btnId, valueToCopy, defaultLabel, toastMessage) {
+      const btn = document.getElementById(btnId);
+      const labelEl = btn.querySelector('.dock-btn-label');
+      let resetTimer = null;
+
+      btn.addEventListener('click', async () => {
+        const copied = await copyToClipboard(valueToCopy);
+        if (!copied) {
+          showQuickToast(`Copy: ${valueToCopy}`);
+          return;
+        }
+        btn.classList.add('is-copied');
+        if (labelEl) labelEl.textContent = 'Copied ✓';
+        showQuickToast(toastMessage);
+
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          btn.classList.remove('is-copied');
+          if (labelEl) labelEl.textContent = defaultLabel;
+        }, 2000);
+      });
+    }
+
+    bindCopyButton(
+      'copyEmailBtn',
+      'iman.ranjbar@gmail.com',
+      'Copy Email',
+      'Copied iman.ranjbar@gmail.com'
+    );
+
+
+    document.getElementById('dockResumeBtn').addEventListener('click', () => {
+      cvModal.classList.add('open');
+    });
+
+    document.getElementById('dockPrintBtn').addEventListener('click', () => {
+      cvModal.classList.add('open');
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    });
+
+    dockScrollBtn.addEventListener('click', () => {
+      const nextIdx = activeIdx >= chapters.length - 1 ? 0 : activeIdx + 1;
+      chapterEls[nextIdx].scrollIntoView({ behavior: 'smooth' });
+    });
+    // 6. 60fps Mouse-Driven Micro-Parallax Depth Effect
+    const parallaxLayer = document.getElementById('parallaxLayer');
+    const disableParallax =
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!disableParallax && parallaxLayer) {
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      const LERP_FACTOR = 0.08;
+
+      window.addEventListener('mousemove', (e) => {
+        targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetY = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
+      });
+
+      cardEls.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const relX = e.clientX - rect.left;
+          const relY = e.clientY - rect.top;
+          const normX = (relX / rect.width) * 2 - 1;
+          const normY = (relY / rect.height) * 2 - 1;
+
+          card.style.setProperty('--mouse-x', `${relX.toFixed(1)}px`);
+          card.style.setProperty('--mouse-y', `${relY.toFixed(1)}px`);
+          card.style.setProperty('--card-shift-x', `${(normX * 4).toFixed(2)}px`);
+          card.style.setProperty('--card-shift-y', `${(normY * 4).toFixed(2)}px`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.setProperty('--card-shift-x', '0px');
+          card.style.setProperty('--card-shift-y', '0px');
+        });
+      });
+
+      function animateParallax() {
+        const prevX = currentX;
+        const prevY = currentY;
+
+        currentX += (targetX - currentX) * LERP_FACTOR;
+        currentY += (targetY - currentY) * LERP_FACTOR;
+
+        const moved =
+          Math.abs(currentX - prevX) > 0.0005 ||
+          Math.abs(currentY - prevY) > 0.0005;
+
+        if (moved) {
+          const bgX = (-currentX * 12).toFixed(2);
+          const bgY = (-currentY * 8).toFixed(2);
+          const rotY = (currentX * 1.2).toFixed(3);
+          const rotX = (-currentY * 1.2).toFixed(3);
+
+          parallaxLayer.style.transform =
+            `translate3d(${bgX}px, ${bgY}px, 0) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+
+          const petalX = (-currentX * 24).toFixed(2);
+          const petalY = (-currentY * 16).toFixed(2);
+          canvas.style.transform = `translate3d(${petalX}px, ${petalY}px, 0)`;
+
+          updateConnectorLine(false);
+        }
+
+        requestAnimationFrame(animateParallax);
+      }
+
+      requestAnimationFrame(animateParallax);
+    }
+
+    // 7. Interactive System Architecture Blueprint Modal
+    const architectures = {
+      assistify: {
+        title: 'Assistify AI · Multi-Agent HOA Operations',
+        role: 'AI Engineer · Multi-Agent & RAG',
+        summary: 'Tenant-isolated B2B AI operations suite: a 24/7 ElevenLabs voice agent, admin copilot and a 4-agent / 10-tool system serving 1,000+ residential units.',
+        url: 'https://assistify.ai/',
+        urlLabel: 'assistify.ai ↗',
+        nodes: [
+          {
+            stage: '01 · Ingest',
+            title: 'Resident Voice / Web / Mobile',
+            techs: ['ElevenLabs', 'Voice Agent', 'Admin Copilot'],
+            scale: '24/7 voice intake · latency 2.5s → <1s'
+          },
+          {
+            stage: '02 · Gateway',
+            title: 'FastAPI Gateway & Tenant Auth',
+            techs: ['FastAPI', 'JWT', 'Tenant Scope'],
+            scale: 'Strict per-community isolation & rate limits'
+          },
+          {
+            stage: '03 · Orchestrate',
+            title: 'Multi-Agent Router',
+            techs: ['4 Agents', '10 Tools', 'OpenAI'],
+            scale: 'Specialized agents with tool-calling'
+          },
+          {
+            stage: '04 · Knowledge',
+            title: 'Qdrant / Vector RAG + HOA Rules Engine',
+            techs: ['Qdrant', 'Embeddings', 'Rule Engine'],
+            scale: 'Namespace-isolated retrieval + policy checks'
+          },
+          {
+            stage: '05 · Guardrails',
+            title: 'Human-in-the-Loop Guardrails & Response',
+            techs: ['Copilot', 'Audit Log', 'Escalation'],
+            scale: 'Confidence gating & deterministic sign-off'
+          }
+        ],
+        highlights: [
+          {
+            title: 'Tenant-Isolated Knowledge Indexing',
+            desc: 'RAG over ~100 governing documents per community, scoped per tenant, reaching 98%+ accuracy on a ground-truth Q&A eval set in Langfuse.'
+          },
+          {
+            title: 'Vapi → ElevenLabs Migration',
+            desc: 'Proposed and led the move to a tool-based ElevenLabs architecture, cutting average response latency from 2.5s to under 1s and lowering cost per call.'
+          },
+          {
+            title: 'Deterministic Rule Verification',
+            desc: 'Pairs semantic RAG retrieval with structured HOA bylaw validation and human-in-the-loop escalation for high-impact decisions.'
+          }
+        ]
+      },
+      weddingly: {
+        title: 'WeddinglyAi · Generative Visualization Studio',
+        role: 'AI Engineer · Generative Vision',
+        summary: 'Low-latency multi-provider generative AI studio delivering identity-preserving bridal and venue visualizations across iOS, Android, and Web.',
+        url: 'https://weddingly.ai/',
+        urlLabel: 'weddingly.ai ↗',
+        nodes: [
+          {
+            stage: '01 · Input',
+            title: 'User Photo + Style Prompt',
+            techs: ['iOS / Android', 'Web Studio', 'Pre-proc'],
+            scale: 'Face/pose validation & prompt enrichment'
+          },
+          {
+            stage: '02 · Condition',
+            title: 'Pose & Identity Conditioning',
+            techs: ['ControlNet', 'IP-Adapter', 'OpenCV'],
+            scale: 'Preserves subject identity & garment drape'
+          },
+          {
+            stage: '03 · Route',
+            title: 'Unified Inference Router',
+            techs: ['FLUX', 'Ideogram 3', 'SD + LoRA'],
+            scale: 'Dynamic routing across Runware, Stability & Replicate'
+          },
+          {
+            stage: '04 · Compute',
+            title: 'RunPod Serverless GPU Workers',
+            techs: ['RunPod', 'CUDA', 'Docker'],
+            scale: '<3s per image · cold start 15s → <5s'
+          },
+          {
+            stage: '05 · Output',
+            title: 'Photorealistic Bridal / Venue Output',
+            techs: ['Upscale', 'CDN', 'Webhook'],
+            scale: 'High-res delivery with async status streaming'
+          }
+        ],
+        highlights: [
+          {
+            title: 'Custom LoRA Domain Fidelity',
+            desc: 'Fine-tuned Stable Diffusion + LoRA adapters for photorealistic bridal silhouettes, fabric textures, and venue lighting consistency.'
+          },
+          {
+            title: 'GPU Cold-Start & VRAM Optimization',
+            desc: 'Engineered containerized RunPod serverless workers with baked model weights and memory-efficient scheduling to slash latency.'
+          },
+          {
+            title: 'Multi-Provider Fallback Routing',
+            desc: 'Unified FLUX, Ideogram 3 Turbo, Runware, Stability, and Replicate behind a resilient inference abstraction for high availability.'
+          }
+        ]
+      },
+      faceage: {
+        title: 'FaceAge & Hair Analyze · Skin, Face & Hair AI',
+        role: 'Sole AI Architect',
+        summary: 'End-to-end computer vision platform from dataset curation and multi-task PyTorch training to containerized FastAPI serving and MLOps.',
+        url: 'https://getfaceage.com/',
+        urlLabel: 'getfaceage.com ↗',
+        nodes: [
+          {
+            stage: '01 · Capture',
+            title: 'Facial Image Capture',
+            techs: ['Web / Mobile', 'Quality Gate', 'HTTPS'],
+            scale: 'Lighting, blur & framing validation at intake'
+          },
+          {
+            stage: '02 · Align',
+            title: 'Face Detection & Landmark Alignment',
+            techs: ['OpenCV', 'Landmarks', 'ROI Crop'],
+            scale: 'Deterministic geometric normalization (<25ms)'
+          },
+          {
+            stage: '03 · Backbone',
+            title: 'Multi-Task Deep Learning Vision Backbone',
+            techs: ['PyTorch', 'CNN / ViT', 'ONNX'],
+            scale: 'Shared feature extractor for multi-head inference'
+          },
+          {
+            stage: '04 · Score',
+            title: 'Skin & Facial Attribute Scoring Engine',
+            techs: ['Multi-Head', 'Calibration', 'Post-Proc'],
+            scale: '15+ skin, face & hair attributes · 75%+ validated'
+          },
+          {
+            stage: '05 · Serve',
+            title: 'Containerized FastAPI & MLOps Monitoring',
+            techs: ['FastAPI', 'Docker', 'CI/CD'],
+            scale: 'Shopify app used by 100+ stores'
+          }
+        ],
+        highlights: [
+          {
+            title: 'End-to-End Sole AI Ownership',
+            desc: 'Owned the full lifecycle as sole AI architect, from dataset curation and augmentation to multi-task PyTorch model architecture.'
+          },
+          {
+            title: 'Dockerized FastAPI Production Serving',
+            desc: 'Packaged OpenCV alignment and PyTorch inference inside reproducible Docker containers with async FastAPI endpoints.'
+          },
+          {
+            title: 'CI/CD & MLOps Observability',
+            desc: 'Automated build/test pipelines, inference latency tracking, and production health checks across Dubai & Tehran deployments.'
+          }
+        ]
+      }
+    };
+
+    const archModal = document.getElementById('archModal');
+    const archTitle = document.getElementById('archTitle');
+    const archRole = document.getElementById('archRole');
+    const archSummary = document.getElementById('archSummary');
+    const archLiveLink = document.getElementById('archLiveLink');
+    const archPipeline = document.getElementById('archPipeline');
+    const archHighlights = document.getElementById('archHighlights');
+    const archTabs = document.querySelectorAll('.arch-tab');
+
+    function buildConnectorHTML() {
+      return `
+        <div class="arch-connector" aria-hidden="true">
+          <svg class="arch-connector-h" viewBox="0 0 32 24">
+            <line x1="2" y1="12" x2="24" y2="12" class="arch-flow-line" />
+            <polygon points="23,8 30,12 23,16" class="arch-flow-arrow" />
+            <circle r="2.3" cy="12" class="arch-flow-pulse">
+              <animate attributeName="cx" values="3;24" dur="1.4s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+          <svg class="arch-connector-v" viewBox="0 0 24 28">
+            <line x1="12" y1="2" x2="12" y2="20" class="arch-flow-line" />
+            <polygon points="8,19 12,26 16,19" class="arch-flow-arrow" />
+            <circle r="2.3" cx="12" class="arch-flow-pulse">
+              <animate attributeName="cy" values="3;20" dur="1.4s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderArchitecture(key) {
+      const data = architectures[key];
+      if (!data) return;
+
+      archTitle.textContent = data.title;
+      archRole.textContent = data.role;
+      archSummary.textContent = data.summary;
+      archLiveLink.href = data.url;
+      archLiveLink.textContent = data.urlLabel;
+
+      archTabs.forEach((tab) => {
+        const isActive = tab.dataset.archTab === key;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', String(isActive));
+      });
+
+      archPipeline.innerHTML = data.nodes.map((node, idx) => {
+        const nodeHTML = `
+          <div class="arch-node">
+            <div>
+              <div class="arch-node-stage">${node.stage}</div>
+              <div class="arch-node-title">${node.title}</div>
+              <div class="arch-node-techs">
+                ${node.techs.map(t => `<span class="arch-node-tech">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="arch-node-scale">${node.scale}</div>
+          </div>
+        `;
+        return idx < data.nodes.length - 1 ? nodeHTML + buildConnectorHTML() : nodeHTML;
+      }).join('');
+
+      archHighlights.innerHTML = data.highlights.map(h => `
+        <div class="arch-highlight-card">
+          <h5>${h.title}</h5>
+          <p>${h.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function openArchModal(key) {
+      renderArchitecture(key);
+      archModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArchModal() {
+      archModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    chaptersRoot.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.arch-trigger-btn');
+      if (trigger) {
+        openArchModal(trigger.dataset.arch);
+      }
+    });
+
+    archTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        renderArchitecture(tab.dataset.archTab);
+      });
+    });
+
+    document.getElementById('closeArchBtn').addEventListener('click', closeArchModal);
+    archModal.addEventListener('click', (e) => {
+      if (e.target === archModal) closeArchModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (archModal.classList.contains('open')) {
+          closeArchModal();
+        } else if (cvModal.classList.contains('open')) {
+          cvModal.classList.remove('open');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
