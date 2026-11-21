@@ -142,6 +142,7 @@
       height: 100vh;
       z-index: 15;
       pointer-events: none;
+      transition: opacity 0.3s ease;
     }
 
     .connector-path {
@@ -345,11 +346,14 @@
       transform: translate3d(var(--card-shift-x, 0px), var(--card-shift-y, 0px), 0);
     }
 
-    @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion: reduce) {
       .parallax-layer,
       #petalsCanvas {
         transform: none !important;
       }
+    }
+
+    @media (pointer: coarse), (prefers-reduced-motion: reduce) {
       .editorial-card::before {
         display: none;
       }
@@ -1148,26 +1152,30 @@
 
     @media (max-width: 920px) {
       .bg-image {
-        object-position: center 20%;
+        /* full-width image (object-fit would crop to the box) so the camera can pan across the whole tree */
+        width: auto;
+        min-width: 100%;
+        aspect-ratio: 2752 / 1536;
       }
       .chapter {
         min-height: 100svh;
         justify-content: center;
         align-items: flex-end;
-        padding: 90px 18px 92px;
+        padding: 38vh 18px 92px; /* open space above each card keeps the tree on stage */
       }
       .editorial-card {
         max-width: 560px;
         padding: 24px 24px;
       }
-      .rail, .connector-layer {
+      .rail {
         display: none;
       }
       header {
         padding: 16px 20px;
+        background: linear-gradient(180deg, rgba(11, 14, 13, 0.92) 0%, rgba(11, 14, 13, 0.7) 55%, transparent 100%);
       }
       .stage-vignette {
-        background: linear-gradient(180deg, rgba(11, 14, 13, 0.55) 0%, rgba(11, 14, 13, 0.2) 32%, rgba(11, 14, 13, 0.92) 72%);
+        background: linear-gradient(180deg, rgba(11, 14, 13, 0.7) 0%, rgba(11, 14, 13, 0.08) 22%, rgba(11, 14, 13, 0.18) 60%, rgba(11, 14, 13, 0.85) 100%);
       }
       .recruiter-dock {
         left: 12px;
@@ -1237,7 +1245,7 @@
         font-size: 0.72rem;
       }
       .chapter {
-        padding: 80px 12px 84px;
+        padding: 38vh 12px 84px;
       }
       .editorial-card {
         padding: 20px 18px;
@@ -1751,22 +1759,30 @@
     const connectorPath = document.getElementById('connectorPath');
     const connectorJoint = document.getElementById('connectorJoint');
     const connectorTerminal = document.getElementById('connectorTerminal');
+    const connectorSvg = document.getElementById('connectorSvg');
 
     let activeIdx = 0;
     let isDrawingStroke = false;
     let strokeDoneTimer = null;
 
     function updateConnectorLine(animateStroke = false) {
-      if (window.innerWidth <= 920) return;
-
       const beaconRect = treeBeacon.getBoundingClientRect();
       const cardRect = cardEls[activeIdx].getBoundingClientRect();
 
       const startX = beaconRect.left + beaconRect.width / 2;
       const startY = beaconRect.top + beaconRect.height / 2;
 
-      const endX = cardRect.left;
-      const endY = Math.min(Math.max(cardRect.top + 46, 110), window.innerHeight - 90);
+      let endX, endY;
+      if (window.innerWidth <= 920) {
+        // Phones: drop from the branch onto the card's top edge; hide once the card slides over the branch
+        endX = cardRect.left + 24;
+        endY = cardRect.top;
+        connectorSvg.style.opacity = endY - startY > 28 ? '1' : '0';
+      } else {
+        endX = cardRect.left;
+        endY = Math.min(Math.max(cardRect.top + 46, 110), window.innerHeight - 90);
+        connectorSvg.style.opacity = '1';
+      }
 
       // Architectural 45-degree chamfered engineering callout path
       const elbowX = startX + (endX - startX) * 0.45;
@@ -1840,24 +1856,34 @@
       return `scale(${scale}) translate(${clampedX.toFixed(2)}%, ${clampedY.toFixed(2)}%)`;
     }
 
+    const BG_RATIO = 2752 / 1536; // bg.jpg width / height
+    const OVERSCAN = 24; // .parallax-layer inset
+
     function getResponsiveStageProps(data) {
       const w = window.innerWidth;
-      if (w <= 640) {
-        // Mobile: keep bonsai centered in upper viewport above bottom-aligned card
-        const topPct = Math.min(parseFloat(data.beacon.top), 36);
-        return {
-          transform: clampStageTransform('scale(1.10) translate(0%, -4%)'),
-          top: `${topPct}%`,
-          left: '50%'
-        };
-      }
       if (w <= 920) {
-        // Tablet: gentler zoom & centered horizontal framing
-        const topPct = Math.min(parseFloat(data.beacon.top) * 0.72, 42);
+        // Phones/tablets: fly the camera to this chapter's branch, like desktop does.
+        // Beacon % were tuned on a ~16:9 desktop where layer ≈ image, so they double as image coordinates.
+        const h = window.innerHeight;
+        const lw = w + OVERSCAN * 2, lh = h + OVERSCAN * 2;
+        const iw = Math.max(lw, lh * BG_RATIO), ih = iw / BG_RATIO; // object-fit: cover
+        const oy = (lh - ih) / 2; // object-position: left center
+        const fx = parseFloat(data.beacon.left) / 100 * iw;
+        const fy = oy + parseFloat(data.beacon.top) / 100 * ih; // branch, in layer px
+        const s = parseFloat(data.transform.match(/scale\(([\d.]+)/)[1]);
+        // Pre-scale shift that lands the branch on `target`, without pulling the overscan edge into view
+        const shift = (p, size, target, lo, hi) => {
+          const c = size / 2;
+          const t = (target - c) / s - (p - c);
+          return Math.max((size - c) / s - (hi - c), Math.min(-c / s - (lo - c), t));
+        };
+        // The img box is iw × lh (see .bg-image at ≤920px); keep OVERSCAN of it past each viewport edge for the tilt
+        const tx = shift(fx - OVERSCAN, w, w / 2, 0, iw - 2 * OVERSCAN);
+        const ty = shift(fy - OVERSCAN, h, h * 0.28, 0, h);
         return {
-          transform: clampStageTransform('scale(1.10) translate(0%, -3%)'),
-          top: `${topPct.toFixed(1)}%`,
-          left: '46%'
+          transform: `scale(${s}) translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px)`,
+          top: `${(fy / lh * 100).toFixed(2)}%`,
+          left: `${(fx / lw * 100).toFixed(2)}%`
         };
       }
       return {
@@ -1918,7 +1944,11 @@
           activateChapter(Number(entry.target.dataset.index));
         }
       });
-    }, { threshold: 0.52 });
+    }, window.innerWidth <= 920
+      // Phones: tall chapters may never be 52% visible, so switch when a chapter crosses a line 30% down.
+      // shortcut: picked once at load, so rotating a tablet across 920px keeps the old rule; rebuild on resize if that matters
+      ? { rootMargin: '-30% 0px -69% 0px' }
+      : { threshold: 0.52 });
 
     chapterEls.forEach(el => observer.observe(el));
 
@@ -1934,8 +1964,9 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
+    const petalSpan = window.innerWidth <= 920 ? 1 : 0.65; // the tree fills the whole screen on phones
     const petals = Array.from({ length: 28 }, () => ({
-      x: Math.random() * window.innerWidth * 0.65,
+      x: Math.random() * window.innerWidth * petalSpan,
       y: Math.random() * window.innerHeight,
       size: 2.5 + Math.random() * 3.5,
       speedY: 0.35 + Math.random() * 0.65,
@@ -1953,9 +1984,9 @@
 
         if (p.y > ch + 10) {
           p.y = -10;
-          p.x = Math.random() * cw * 0.65;
+          p.x = Math.random() * cw * petalSpan;
         }
-        if (p.x > cw * 0.72) p.x = Math.random() * cw * 0.2;
+        if (p.x > cw * (petalSpan + 0.07)) p.x = Math.random() * cw * 0.2;
 
         ctx.save();
         ctx.translate(p.x, p.y);
@@ -2066,46 +2097,56 @@
     });
     // 6. 60fps Mouse-Driven Micro-Parallax Depth Effect
     const parallaxLayer = document.getElementById('parallaxLayer');
-    const disableParallax =
-      window.matchMedia('(pointer: coarse)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!disableParallax && parallaxLayer) {
+    if (!reduceMotion && parallaxLayer) {
       let targetX = 0;
       let targetY = 0;
       let currentX = 0;
       let currentY = 0;
       const LERP_FACTOR = 0.08;
 
-      window.addEventListener('mousemove', (e) => {
-        targetX = (e.clientX / window.innerWidth) * 2 - 1;
-        targetY = (e.clientY / window.innerHeight) * 2 - 1;
-      }, { passive: true });
+      if (isTouch) {
+        // Phones: tilting the device moves the scene. iOS only sends this after a permission prompt, so there it stays still.
+        let baseBeta = null;
+        window.addEventListener('deviceorientation', (e) => {
+          if (e.beta == null || e.gamma == null) return;
+          baseBeta = baseBeta === null ? e.beta : baseBeta + (e.beta - baseBeta) * 0.02; // slowly re-centre on how the phone is held
+          targetX = Math.max(-1, Math.min(1, e.gamma / 20));
+          targetY = Math.max(-1, Math.min(1, (e.beta - baseBeta) / 20));
+        }, { passive: true });
+      } else {
+        window.addEventListener('mousemove', (e) => {
+          targetX = (e.clientX / window.innerWidth) * 2 - 1;
+          targetY = (e.clientY / window.innerHeight) * 2 - 1;
+        }, { passive: true });
 
-      document.addEventListener('mouseleave', () => {
-        targetX = 0;
-        targetY = 0;
-      });
-
-      cardEls.forEach((card) => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const relX = e.clientX - rect.left;
-          const relY = e.clientY - rect.top;
-          const normX = (relX / rect.width) * 2 - 1;
-          const normY = (relY / rect.height) * 2 - 1;
-
-          card.style.setProperty('--mouse-x', `${relX.toFixed(1)}px`);
-          card.style.setProperty('--mouse-y', `${relY.toFixed(1)}px`);
-          card.style.setProperty('--card-shift-x', `${(normX * 4).toFixed(2)}px`);
-          card.style.setProperty('--card-shift-y', `${(normY * 4).toFixed(2)}px`);
+        document.addEventListener('mouseleave', () => {
+          targetX = 0;
+          targetY = 0;
         });
 
-        card.addEventListener('mouseleave', () => {
-          card.style.setProperty('--card-shift-x', '0px');
-          card.style.setProperty('--card-shift-y', '0px');
+        cardEls.forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const relX = e.clientX - rect.left;
+            const relY = e.clientY - rect.top;
+            const normX = (relX / rect.width) * 2 - 1;
+            const normY = (relY / rect.height) * 2 - 1;
+
+            card.style.setProperty('--mouse-x', `${relX.toFixed(1)}px`);
+            card.style.setProperty('--mouse-y', `${relY.toFixed(1)}px`);
+            card.style.setProperty('--card-shift-x', `${(normX * 4).toFixed(2)}px`);
+            card.style.setProperty('--card-shift-y', `${(normY * 4).toFixed(2)}px`);
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--card-shift-x', '0px');
+            card.style.setProperty('--card-shift-y', '0px');
+          });
         });
-      });
+      }
 
       function animateParallax() {
         const prevX = currentX;
